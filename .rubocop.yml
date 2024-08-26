@@ -1,0 +1,17 @@
+require:
+  - 'rubocop-rails'
+
+AllCops:
+  NewCops: enable
+  DisplayCopNames: true
+  SuggestExtensions: false
+  Exclude:
+    - 'bin/*'
+    - 'db/**/*'
+    - 'tmp/**/*'
+
+Style/Documentation:
+  Enabled: false
+
+Style/FrozenStringLiteralComment:
+  Enabled: false
