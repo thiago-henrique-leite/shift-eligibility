@@ -13,6 +13,12 @@ development:
 
 test:
   <<: *default
+  database: postgres
+  username: postgres
+  password: postgres
+  host: seed-db-1
+  port: 5432
+  database: worker_eligibility_test
 
 production:
   <<: *default
