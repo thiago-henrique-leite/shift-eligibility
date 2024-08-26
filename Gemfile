@@ -16,3 +16,10 @@ group :development do
   gem 'rubocop', '~> 1.65'
   gem 'rubocop-rails', '~> 2.26'
 end
+
+group :test do
+  gem 'factory_bot_rails', '~> 6.4'
+  gem 'rspec', '~> 3.13'
+  gem 'rspec-rails', '~> 6.1'
+  gem 'shoulda-matchers', '~> 5.3'
+end
