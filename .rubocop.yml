@@ -10,14 +10,14 @@ AllCops:
     - 'db/**/*'
     - 'tmp/**/*'
 
+Layout/LineLength:
+  Max: 120
+
+Metrics/MethodLength:
+  Max: 20
+
 Style/Documentation:
   Enabled: false
 
 Style/FrozenStringLiteralComment:
   Enabled: false
-
-Metrics/LineLength:
-  Max: 120
-
-Metrics/MethodLength:
-  Max: 20
