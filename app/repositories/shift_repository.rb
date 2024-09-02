@@ -1,5 +1,5 @@
 class ShiftRepository
-  def self.available_shifts_for_facility(worker, facility_ids, start_date, end_date)
+  def self.shifts_for_facilities(worker, facility_ids, start_date, end_date)
     Shift
       .joins(:facility)
       .active
@@ -11,7 +11,7 @@ class ShiftRepository
       .distinct
   end
 
-  def self.available_facility_ids(worker)
+  def self.facilities_for_worker(worker)
     Facility
       .active
       .joins(:facility_requirements)
