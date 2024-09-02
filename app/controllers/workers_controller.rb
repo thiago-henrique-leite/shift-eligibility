@@ -5,6 +5,10 @@ class WorkersController < ApplicationController
 
   private
 
+  def available_shifts
+    ShiftEligibilityService.new(worker.id, start_date, end_date).eligible_shifts
+  end
+
   def end_date
     params[:end_date] || '2100-01-01'
   end
@@ -14,11 +18,9 @@ class WorkersController < ApplicationController
 
     return Rails.cache.read(cache_key) if Rails.cache.exist?(cache_key)
 
-    shifts = ShiftEligibilityService.new(worker.id, start_date, end_date).eligible_shifts
+    Rails.cache.write(cache_key, available_shifts, expires_in: 5.minutes)
 
-    Rails.cache.write(cache_key, shifts, expires_in: 5.minutes)
-
-    shifts
+    available_shifts
   end
 
   def start_date
