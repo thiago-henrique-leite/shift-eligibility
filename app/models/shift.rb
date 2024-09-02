@@ -10,6 +10,7 @@ class Shift < ApplicationRecord
 
   scope :active, -> { where(is_deleted: false) }
   scope :unclaimed, -> { where(worker_id: nil) }
-  scope :for_facility, ->(facility_id) { where(facility_id: facility_id) }
-  scope :for_date_range, ->(start_date, end_date) { where('start >= ? AND end <= ?', start_date, end_date) }
+  scope :for_facilities, ->(facility_ids) { where(facility_id: facility_ids) }
+  scope :for_date_range, ->(start_date, end_date) { where('start >= ? AND ends_at <= ?', start_date, end_date) }
+  scope :for_profession, ->(profession) { where(profession: profession) }
 end
