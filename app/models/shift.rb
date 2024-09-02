@@ -6,7 +6,11 @@ class Shift < ApplicationRecord
 
   validates :ends_at, :profession, :start, presence: true
 
-  enum profession: { CNA: 'CNA', LVN: 'LVN', RN: 'RN' }
+  enum :profession, {
+    CNA: 'CNA',
+    LVN: 'LVN',
+    RN: 'RN'
+  }
 
   scope :active, -> { where(is_deleted: false) }
   scope :unclaimed, -> { where(worker_id: nil) }
