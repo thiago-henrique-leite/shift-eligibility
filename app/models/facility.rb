@@ -9,10 +9,10 @@ class Facility < ApplicationRecord
 
   scope :active, -> { where(is_active: true) }
 
-  scope :for_available_worker, ->(worker) {
+  scope :for_available_worker, lambda { |worker|
     document_ids = worker.documents.active.distinct.pluck(:id)
 
-    .where.not(
+    where.not(
       'EXISTS (
         SELECT 1
         FROM "FacilityRequirement" AS fr
