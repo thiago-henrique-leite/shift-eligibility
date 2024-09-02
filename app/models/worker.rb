@@ -4,6 +4,7 @@ class Worker < ApplicationRecord
   has_many :document_workers
   has_many :documents, through: :document_workers
   has_many :shifts
+  has_many :facilities, through: :documents
 
   validates :name, :profession, presence: true
 
