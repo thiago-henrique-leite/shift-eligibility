@@ -1,5 +1,3 @@
-require_relative '../repositories/shift_repository'
-
 class ShiftEligibilityService
   def initialize(worker_id, start_date, end_date)
     @worker_id = worker_id
@@ -10,7 +8,7 @@ class ShiftEligibilityService
   def eligible_shifts
     return [] unless worker.is_active
 
-    ::ShiftRepository.available_shifts_for_facility(worker, facility_ids, start_date, end_date)
+    ShiftRepository.shifts_for_facilities(worker, facility_ids, start_date, end_date)
   end
 
   private
@@ -22,6 +20,6 @@ class ShiftEligibilityService
   end
 
   def facility_ids
-    @facility_ids ||= ::ShiftRepository.available_facility_ids(worker)
+    ShiftRepository.facilities_for_worker(worker)
   end
 end
