@@ -1,11 +1,11 @@
 FROM ruby:3.0.2
 
-RUN mkdir /worker-eligibility
-WORKDIR /worker-eligibility
+RUN mkdir /shift-eligibility
+WORKDIR /shift-eligibility
 
-COPY Gemfile /worker-eligibility/Gemfile
-COPY Gemfile.lock /worker-eligibility/Gemfile.lock
+COPY Gemfile /shift-eligibility/Gemfile
+COPY Gemfile.lock /shift-eligibility/Gemfile.lock
 
 RUN bundle install && bundle update --bundler
 
-COPY . /worker-eligibility
+COPY . /shift-eligibility
