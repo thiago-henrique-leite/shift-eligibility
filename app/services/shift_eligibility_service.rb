@@ -8,7 +8,7 @@ class ShiftEligibilityService
   def eligible_shifts
     return [] unless worker.is_active
 
-    ShiftRepository.shifts_for_facilities(worker, start_date, end_date)
+    ShiftRepository.shifts_for_worker(worker, start_date, end_date)
   end
 
   private

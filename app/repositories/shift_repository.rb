@@ -1,5 +1,5 @@
 class ShiftRepository
-  def self.shifts_for_facilities(worker, start_date, end_date)
+  def self.shifts_for_worker(worker, start_date, end_date)
     Shift
       .active
       .unclaimed
