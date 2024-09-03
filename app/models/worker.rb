@@ -2,7 +2,7 @@ class Worker < ApplicationRecord
   self.table_name = 'Worker'
 
   has_many :document_workers, dependent: :destroy
-  has_many :documents, through: :document_workers
+  has_many :documents, -> { active }, through: :document_workers
   has_many :shifts, dependent: :destroy
   has_many :facilities, through: :documents
 
