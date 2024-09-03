@@ -14,7 +14,6 @@ class ShiftRepository
   def self.facilities_for_worker(worker)
     Facility
       .active
-      .joins(:facility_requirements)
       .for_available_worker(worker)
       .distinct
       .pluck(:id)
