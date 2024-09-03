@@ -1,7 +1,6 @@
 class ShiftRepository
   def self.shifts_for_facilities(worker, facility_ids, start_date, end_date)
     Shift
-      .joins(:facility)
       .active
       .unclaimed
       .for_facilities(facility_ids)
