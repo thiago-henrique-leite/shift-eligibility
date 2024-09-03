@@ -1,5 +1,5 @@
 class ShiftEligibilityService
-  def initialize(worker_id:, start_date:, end_date:)
+  def initialize(worker_id, start_date, end_date)
     @worker_id = worker_id
     @start_date = start_date
     @end_date = end_date

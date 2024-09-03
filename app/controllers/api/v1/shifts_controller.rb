@@ -10,19 +10,23 @@ module Api
       private
 
       def available_shifts
-        cache_key = search_params.map { |key, value| "#{key}_#{value}" }.join('_')
+        cache_key = "shifts/#{worker_id}/#{start_date}/#{end_date}/#{page}/#{per_page}"
 
         Rails.cache.fetch(cache_key, expires_in: 5.minutes) do
-          ShiftEligibilityService.new(**search_params).eligible_shifts_for_worker
+          ShiftEligibilityService.new(worker_id, start_date, end_date).eligible_shifts_for_worker
         end
       end
 
-      def search_params
-        params.permit(
-          :end_date,
-          :start_date,
-          :worker_id
-        ).to_h.symbolize_keys
+      def end_date
+        params[:end_date]
+      end
+
+      def start_date
+        params[:start_date]
+      end
+
+      def worker_id
+        params[:worker_id]
       end
     end
   end
