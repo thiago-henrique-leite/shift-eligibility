@@ -18,7 +18,11 @@ module Api
       end
 
       def search_params
-        params.permit(:facility_id, :start_date, :end_date, :worker_id).to_h
+        params.permit(
+          :end_date,
+          :start_date,
+          :worker_id
+        ).to_h.symbolize_keys
       end
     end
   end
