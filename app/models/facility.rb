@@ -10,7 +10,7 @@ class Facility < ApplicationRecord
   scope :active, -> { where(is_active: true) }
 
   scope :for_available_worker, lambda { |worker|
-    where(
+    active.where(
       'EXISTS (
         SELECT 1
         FROM "FacilityRequirement"
@@ -27,6 +27,6 @@ class Facility < ApplicationRecord
           )
         )
       )', worker.id
-    )
+    ).distinct.pluck(:id)
   }
 end
