@@ -1,9 +1,8 @@
 class ShiftEligibilityService
-  def initialize(worker_id:, start_date:, end_date:, facility_id: nil)
+  def initialize(worker_id:, start_date:, end_date:)
     @worker_id = worker_id
     @start_date = start_date
     @end_date = end_date
-    @facility_id = facility_id
   end
 
   def eligible_shifts_for_worker
@@ -11,12 +10,12 @@ class ShiftEligibilityService
 
     return [] unless worker.is_active?
 
-    ShiftRepository.shifts_for_worker(worker, start_date, end_date, facility_id)
+    ShiftRepository.shifts_for_worker(worker, start_date, end_date)
   end
 
   private
 
-  attr_reader :worker_id, :start_date, :end_date, :facility_id
+  attr_reader :worker_id, :start_date, :end_date
 
   def validate!
     raise ArgumentError, 'worker_id invalid' if worker.nil?
