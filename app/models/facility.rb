@@ -13,7 +13,7 @@ class Facility < ApplicationRecord
     active
       .joins(:facility_requirements)
       .group('Facility.id')
-      .having('array_agg(DISTINCT document_id) @> ARRAY[?]', worker.document_ids)
+      .having('array_agg(DISTINCT document_id) @> ARRAY[?]', worker.document_ids.presence || [0])
       .pluck(:id)
   }
 end
