@@ -9,24 +9,11 @@ class Facility < ApplicationRecord
 
   scope :active, -> { where(is_active: true) }
 
-  scope :for_available_worker, lambda { |worker|
-    active.where(
-      'EXISTS (
-        SELECT 1
-        FROM "FacilityRequirement"
-        WHERE facility_id = "Facility".id
-        GROUP BY facility_id
-        HAVING array_agg(DISTINCT document_id) @> (
-          SELECT array_agg(DISTINCT document_id)
-          FROM "DocumentWorker"
-          WHERE worker_id = ?
-          AND document_id IN (
-            SELECT id
-            FROM "Document"
-            WHERE is_active = TRUE
-          )
-        )
-      )', worker.id
-    ).distinct.pluck(:id)
+  scope :matching_worker_documents, ->(worker) {
+    active
+      .joins(:facility_requirements)
+      .group('Facility.id')
+      .having('array_agg(DISTINCT document_id) @> ARRAY[?]', worker.document_ids)
+      .pluck(:id)
   }
 end
