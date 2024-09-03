@@ -17,16 +17,7 @@ class Shift < ApplicationRecord
   scope :for_facilities, ->(facility_ids) { where(facility_id: facility_ids) }
   scope :for_date_range, ->(start_date, end_date) { where('start >= ? AND ends_at <= ?', start_date, end_date) }
   scope :for_profession, ->(profession) { where(profession: profession) }
-
-  scope :for_available_worker, lambda { |worker, start_date, end_date|
-    where.not(
-      'EXISTS (
-        SELECT 1
-        FROM "Shift" AS shifts
-        WHERE shifts.worker_id = ?
-        AND shifts.start < ?
-        AND shifts.ends_at > ?
-      )', worker.id, end_date, start_date
-    )
+  scope :for_available_worker, ->(worker, start_date, end_date) {
+    where.not(id: worker.shifts.active.where('start < ? AND ends_at > ?', end_date, start_date).select(:id))
   }
 end
