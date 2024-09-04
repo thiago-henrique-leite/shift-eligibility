@@ -40,3 +40,10 @@ Para melhorar o desempenho e eficiência na busca dos turnos disponíveis para u
 3. Paginação
     - Paginação eficiente: Como forma de evitar o carregamento de grandes volumes de dados de uma vez, utilizei a paginação para dividir
     os resultados em blocos gerenciáveis.
+
+### Gargalos
+
+Os dois pontos críticos e de possíveis gargalos desse serviço são:
+
+- Garantir que o trabalhador possui todos os documentos necessários para a instalação;
+- Garantir que nenhum turno já reivindicado pelo trabalhador é sobreposto pelos possíveis turnos elegíveis.
