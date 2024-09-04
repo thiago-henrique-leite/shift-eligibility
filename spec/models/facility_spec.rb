@@ -8,4 +8,22 @@ RSpec.describe Facility do
   describe 'validations' do
     it { is_expected.to validate_presence_of(:name) }
   end
+
+  describe 'scopes' do
+    describe '.active' do
+      subject { Facility.active }
+
+      context 'when facility is active' do
+        let!(:facility) { create(:facility) }
+
+        it { is_expected.to contain_exactly(facility) }
+      end
+
+      context 'when facility is inactive' do
+        let!(:facility) { create(:facility, :inactive) }
+
+        it { is_expected.to be_empty }
+      end
+    end
+  end
 end

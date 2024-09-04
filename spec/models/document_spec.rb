@@ -9,4 +9,22 @@ RSpec.describe Document do
   describe 'validations' do
     it { is_expected.to validate_presence_of(:name) }
   end
+
+  describe 'scopes' do
+    describe '.active' do
+      subject { Document.active }
+
+      context 'when document is active' do
+        let!(:document) { create(:document) }
+
+        it { is_expected.to contain_exactly(document) }
+      end
+
+      context 'when document is inactive' do
+        let!(:document) { create(:document, :inactive) }
+
+        it { is_expected.to be_empty }
+      end
+    end
+  end
 end

@@ -18,4 +18,22 @@ RSpec.describe Worker do
         .backed_by_column_of_type(:string)
     end
   end
+
+  describe 'scopes' do
+    describe '.active' do
+      subject { Worker.active }
+
+      context 'when worker is active' do
+        let!(:worker) { create(:worker) }
+
+        it { is_expected.to contain_exactly(worker) }
+      end
+
+      context 'when worker is inactive' do
+        let!(:worker) { create(:worker, :inactive) }
+
+        it { is_expected.to be_empty }
+      end
+    end
+  end
 end
