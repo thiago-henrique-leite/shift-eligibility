@@ -6,10 +6,10 @@ class ShiftEligibilityService
     @end_date = end_date
   end
 
-  def eligible_shifts_for_worker
+  def shifts_by_worker_and_facility
     validate!
 
-    ShiftRepository.shifts_for_worker(worker, facility, start_date, end_date)
+    ShiftRepository.shifts_for_worker_and_facility(worker, facility, start_date, end_date)
   end
 
   private
