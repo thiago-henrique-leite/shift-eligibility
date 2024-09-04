@@ -4,7 +4,7 @@ module Api
       include ExceptionHandler
 
       def index
-        render json: pagination(available_shifts)
+        render json: available_shifts.page(page).per(per_page).group_by(&:start)
       end
 
       private
@@ -13,7 +13,7 @@ module Api
         cache_key = "shifts/#{worker_id}/#{facility_id}/#{start_date}/#{end_date}/#{page}/#{per_page}"
 
         Rails.cache.fetch(cache_key, expires_in: 5.minutes) do
-          ShiftEligibilityService.new(worker_id, facility_id, start_date, end_date).eligible_shifts_for_worker
+          ShiftEligibilityService.new(worker_id, facility_id, start_date, end_date).shifts_by_worker_and_facility
         end
       end
 
