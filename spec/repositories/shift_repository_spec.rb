@@ -51,20 +51,46 @@ RSpec.describe ShiftRepository do
       it { is_expected.to be_empty }
     end
 
-    context 'when worker has another shift in the date range' do
-      before do
+    context 'when worker has a shift overlapping the date range' do
+      let!(:worker_shift) do
         create(
           :shift,
           :unclaimed,
           facility: facility,
           profession: profession,
           worker: worker,
-          start: start_date.next_day,
-          ends_at: end_date.prev_day
+          start: worker_shift_start,
+          ends_at: worker_shift_end
         )
       end
 
-      it { is_expected.to be_empty }
+      context 'when shift starts before worker shift and finishs during worker shift' do
+        let(:worker_shift_start) { start_date - 2.day }
+        let(:worker_shift_end) { start_date + 2.day }
+
+        it { is_expected.to be_empty }
+      end
+
+      context 'when shift starts during worker shift and finishs after worker shift' do
+        let(:worker_shift_start) { start_date + 2.day }
+        let(:worker_shift_end) { end_date + 2.day }
+
+        it { is_expected.to be_empty }
+      end
+
+      context 'when shift starts before worker shift and finishs after worker shift' do
+        let(:worker_shift_start) { start_date - 2.day }
+        let(:worker_shift_end) { end_date + 2.day }
+
+        it { is_expected.to be_empty }
+      end
+
+      context 'when shift starts during worker shift and finishs during worker shift' do
+        let(:worker_shift_start) { start_date + 2.day }
+        let(:worker_shift_end) { end_date - 2.day }
+
+        it { is_expected.to be_empty }
+      end
     end
   end
 end
