@@ -3,7 +3,17 @@ FactoryBot.define do
     association :facility
     association :worker
 
-    start_time { 1.hour.since }
-    end_time { 3.hours.since }
+    start { 1.hour.since }
+    ends_at { 3.hours.since }
+    is_deleted { false }
+    profession { 'CNA' }
+
+    trait :inactive do
+      is_deleted { true }
+    end
+
+    trait :unclaimed do
+      worker { nil }
+    end
   end
 end
