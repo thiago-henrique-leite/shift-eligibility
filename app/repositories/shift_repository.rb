@@ -1,6 +1,6 @@
 class ShiftRepository
   class << self
-    def shifts_for_worker(worker, facility, start_date, end_date)
+    def shifts_for_worker_and_facility(worker, facility, start_date, end_date)
       Shift
         .active
         .unclaimed
@@ -9,7 +9,6 @@ class ShiftRepository
         .with_profession(worker.profession)
         .with_availability_for_worker(worker, start_date, end_date)
         .distinct
-        .group_by(&:start)
     end
   end
 end
