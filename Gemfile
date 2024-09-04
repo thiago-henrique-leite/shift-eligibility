@@ -7,11 +7,14 @@ gem 'pg', '~> 1.1'
 gem 'pry-rails', '~> 0.3.11'
 gem 'puma', '>= 5.0'
 gem 'rails', '~> 7.1.4'
+gem 'rswag-api'
+gem 'rswag-ui'
 gem 'tzinfo-data', platforms: %i[mswin mswin64 mingw x64_mingw jruby]
 
 group :development, :test do
   gem 'debug', platforms: %i[mri mswin mswin64 mingw x64_mingw]
   gem 'pry-byebug', '~> 3.10'
+  gem 'rswag-specs'
 end
 
 group :development do
