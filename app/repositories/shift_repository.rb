@@ -1,12 +1,15 @@
 class ShiftRepository
-  def self.shifts_for_worker(worker, start_date, end_date)
-    Shift
-      .active
-      .unclaimed
-      .for_facilities(Facility.matching_worker_documents(worker))
-      .for_date_range(start_date, end_date)
-      .for_profession(worker.profession)
-      .for_available_worker(worker, start_date, end_date)
-      .distinct
+  class << self
+    def shifts_for_worker(worker, facility, start_date, end_date)
+      Shift
+        .active
+        .unclaimed
+        .with_facility(facility.id)
+        .with_date_range(start_date, end_date)
+        .with_profession(worker.profession)
+        .with_availability_for_worker(worker, start_date, end_date)
+        .distinct
+        .group_by(&:start)
+    end
   end
 end
