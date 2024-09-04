@@ -1,0 +1,90 @@
+---
+openapi: 3.0.1
+info:
+  title: Shift Eligibility API V1
+  version: v1
+paths:
+  "/api/v1/shifts":
+    get:
+      summary: Retrieves available shifts
+      tags:
+      - Shifts
+      parameters:
+      - name: worker_id
+        in: query
+        required: true
+        example: 1
+        schema:
+          type: integer
+      - name: facility_id
+        in: query
+        required: true
+        example: 1
+        schema:
+          type: integer
+      - name: start_date
+        in: query
+        required: true
+        format: date-time
+        schema:
+          type: string
+      - name: end_date
+        in: query
+        required: true
+        format: date-time
+        schema:
+          type: string
+      - name: page
+        in: query
+        required: false
+        default: 1
+        schema:
+          type: integer
+      - name: per_page
+        in: query
+        required: false
+        default: 10
+        schema:
+          type: integer
+      responses:
+        '200':
+          description: shifts found
+          content:
+            application/json:
+              schema:
+                "$ref": "#/schemas/shifts"
+servers:
+- url: http://{defaultHost}
+  variables:
+    defaultHost:
+      default: localhost:3000
+schemas:
+  shifts:
+    type: array
+    items:
+      type: object
+      properties:
+        id:
+          type: integer
+        start:
+          type: string
+          format: date-time
+        ends_at:
+          type: string
+          format: date-time
+        profession:
+          type: string
+        is_deleted:
+          type: boolean
+        facility_id:
+          type: integer
+        worker_id:
+          type: integer
+      required:
+      - id
+      - start
+      - ends_at
+      - profession
+      - is_deleted
+      - facility_id
+      - worker_id
