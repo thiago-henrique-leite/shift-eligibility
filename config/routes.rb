@@ -1,5 +1,8 @@
 Rails.application.routes.draw do
-  get 'up' => 'rails/health#show', as: :rails_health_check
+  root to: redirect('/docs')
+
+  mount Rswag::Ui::Engine => '/docs'
+  mount Rswag::Api::Engine => '/docs'
 
   namespace :api do
     namespace :v1 do
