@@ -31,7 +31,8 @@ RSpec.describe 'Api::V1::ShiftsController', type: :request do
             facility: facility,
             profession: worker.profession,
             start: start_date.next_day,
-            ends_at: end_date.prev_day)
+            ends_at: end_date.prev_day
+          )
         end
 
         it 'returns available shifts' do |example|

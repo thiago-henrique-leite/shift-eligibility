@@ -40,7 +40,8 @@ RSpec.describe ShiftEligibilityService do
           facility: facility,
           profession: worker.profession,
           start: start_date.next_day,
-          ends_at: end_date.prev_day)
+          ends_at: end_date.prev_day
+        )
       end
 
       it { is_expected.to contain_exactly(shift) }

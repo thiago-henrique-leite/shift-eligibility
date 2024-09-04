@@ -8,14 +8,13 @@ class ShiftRepository
     # O Trabalhador não deve ter reivindicado um turno que colida com o turno para o qual é elegível.
 
     def shifts_for_worker_and_facility(worker, facility, start_date, end_date)
-      shifts =
-        Shift
-          .active
-          .unclaimed
-          .with_facility(facility.id)
-          .with_profession(worker.profession)
-          .with_date_range(start_date, end_date)
-          .distinct
+      shifts = Shift
+               .active
+               .unclaimed
+               .with_facility(facility.id)
+               .with_profession(worker.profession)
+               .with_date_range(start_date, end_date)
+               .distinct
 
       shifts.where.not(id: overlapping_shift_ids(worker, shifts))
     end
@@ -27,7 +26,7 @@ class ShiftRepository
 
       worker_shift_ranges = worker.shifts.pluck(:start, :ends_at)
 
-      overlapping_shifts_query = worker_shift_ranges.map do |range|
+      overlapping_shifts_query = worker_shift_ranges.map do |_range|
         '(start, ends_at) OVERLAPS (?, ?)'
       end.join(' OR ')
 

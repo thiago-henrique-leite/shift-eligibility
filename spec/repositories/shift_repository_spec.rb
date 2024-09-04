@@ -65,29 +65,29 @@ RSpec.describe ShiftRepository do
       end
 
       context 'when shift starts before worker shift and finishs during worker shift' do
-        let(:worker_shift_start) { start_date - 2.day }
-        let(:worker_shift_end) { start_date + 2.day }
+        let(:worker_shift_start) { start_date - 2.days }
+        let(:worker_shift_end) { start_date + 2.days }
 
         it { is_expected.to be_empty }
       end
 
       context 'when shift starts during worker shift and finishs after worker shift' do
-        let(:worker_shift_start) { start_date + 2.day }
-        let(:worker_shift_end) { end_date + 2.day }
+        let(:worker_shift_start) { start_date + 2.days }
+        let(:worker_shift_end) { end_date + 2.days }
 
         it { is_expected.to be_empty }
       end
 
       context 'when shift starts before worker shift and finishs after worker shift' do
-        let(:worker_shift_start) { start_date - 2.day }
-        let(:worker_shift_end) { end_date + 2.day }
+        let(:worker_shift_start) { start_date - 2.days }
+        let(:worker_shift_end) { end_date + 2.days }
 
         it { is_expected.to be_empty }
       end
 
       context 'when shift starts during worker shift and finishs during worker shift' do
-        let(:worker_shift_start) { start_date + 2.day }
-        let(:worker_shift_end) { end_date - 2.day }
+        let(:worker_shift_start) { start_date + 2.days }
+        let(:worker_shift_end) { end_date - 2.days }
 
         it { is_expected.to be_empty }
       end
