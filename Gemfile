@@ -2,6 +2,7 @@ source 'https://rubygems.org'
 
 ruby '3.0.2'
 
+gem 'concurrent-ruby', '~> 1.3'
 gem 'kaminari', '~> 1.2'
 gem 'pg', '~> 1.1'
 gem 'pry-rails', '~> 0.3.11'

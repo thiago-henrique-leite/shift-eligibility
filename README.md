@@ -13,6 +13,7 @@
 - `rswag-api` e `rswag-ui` para documentação a api;
 - `rubocop`para verificação de lint;
 - `rspec` para testes;
+- `concurrent-ruby` para concorrência.
 
 ### Setup do Projeto
 
@@ -40,6 +41,10 @@ Para melhorar o desempenho e eficiência na busca dos turnos disponíveis para u
 3. Paginação
     - Paginação eficiente: Como forma de evitar o carregamento de grandes volumes de dados de uma vez, utilizei a paginação para dividir
     os resultados em blocos gerenciáveis.
+
+4. Concorrência
+    - Para checar a sobreposição de datas entre os turnos elegíveis e os turnos já reivindicados pelo trabalhador, utilizei
+    concorrência para dividir o trabalho em threads que fazem query mais leves no banco de dados.
 
 ### Gargalos
 

@@ -26,11 +26,21 @@ class ShiftRepository
 
       worker_shift_ranges = worker.shifts.pluck(:start, :ends_at)
 
+      promises = shifts.in_batches(of: 1000).to_a.map do |shift_batch|
+        Concurrent::Promises.future do
+          overlapping_shifts_for_batch(shift_batch, worker_shift_ranges)
+        end
+      end
+
+      Concurrent::Promises.zip(*promises).value.flatten
+    end
+
+    def overlapping_shifts_for_batch(shift_batch, worker_shift_ranges)
       overlapping_shifts_query = worker_shift_ranges.map do |_range|
         '(start, ends_at) OVERLAPS (?, ?)'
       end.join(' OR ')
 
-      shifts.where(overlapping_shifts_query, *worker_shift_ranges.flatten).pluck(:id)
+      shift_batch.where(overlapping_shifts_query, *worker_shift_ranges.flatten).pluck(:id)
     end
   end
 end
