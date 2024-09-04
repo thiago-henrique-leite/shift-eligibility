@@ -21,6 +21,7 @@ class ShiftEligibilityService
     raise ArgumentError, 'facility not found or inactive' if facility.blank?
     raise ArgumentError, 'start_date is required' if start_date.blank?
     raise ArgumentError, 'end_date is required' if end_date.blank?
+    raise ArgumentError, "worker missing documents for facility: #{missing_documents}" if missing_documents.present?
   end
 
   def worker
@@ -29,5 +30,9 @@ class ShiftEligibilityService
 
   def facility
     @facility ||= Facility.active.find_by(id: facility_id)
+  end
+
+  def missing_documents
+    @missing_documents ||= facility.document_ids.uniq - worker.document_ids.uniq
   end
 end
